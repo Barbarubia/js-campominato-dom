@@ -17,6 +17,8 @@ function playGame() {
     // Creo un array vuoto che conterrà il valore di tutte le caselle
     let arrBoxes = [];
 
+    
+
     // Genero un ciclo for che mi genera tante caselle in base alla difficoltà selezionata
     for (let numBox = 1; numBox <= functionDifficulty(); numBox++) {
         // Creo un nuovo div
@@ -39,54 +41,36 @@ function playGame() {
         // Riempio l'array con i valori numerici di tutte le caselle
         arrBoxes.push(parseInt(numBox));
 
-
-        
-
-
-        // GIOCO
-
-
-
         // Seleziono una casella facendole cambiare colore
-        box.addEventListener('click', changeColorBox);
+        // box.addEventListener('click', changeColorBox);
 
         // Leggo il numero della casella cliccata
-        let selectedBox = box.addEventListener('click', readContentBox);
-
-        // Creo un array delle caselle selezionate, inizialmente vuoto
-        let arraySelectedBoxes = [];
-
-        // // Aggiungo all'array il valore delle caselle selezionate
-        arraySelectedBoxes.push(selectedBox);
-        
-        
-        
+        selectedBox = box.addEventListener('click', isBomb);
     }
 
-    // GENERATORE DI 16 NUMERI CASUALI
-        // Creo un array, inizialmente vuoto per i numeri random da non cliccare
-        const arrBombs = []
+    // GENERATORE DI 16 NUMERI CASUALI (BOMBE)
+    // Creo un array, inizialmente vuoto per i numeri random da non cliccare
+    const arrBombs = []
 
-        // Riempio l'array con 16 numeri senza ripetizioni
-        while (arrBombs.length < 16) {
-            let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
-            if (!arrBombs.includes(randomBox)) {
-                arrBombs.push(randomBox);
-            }
+    // Riempio l'array con 16 numeri senza ripetizioni
+    while (arrBombs.length < 16) {
+    let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
+    if (!arrBombs.includes(randomBox)) {
+        arrBombs.push(randomBox);
         }
-    
-    console.log(arrBombs);
-    console.log(arrBombs.includes(10));
-   if (arrBombs.includes(10)) {
-    console.log('HAI PERSO');
-    } else {
-        console.log('hai vinto');
-    }
-    
-    
+    }     
 
-    
-    
+    // Stampo l'array delle bombe in console per testare il funzionamento
+    console.log(arrBombs);
+
+    // Funzione per verificare se la casella selezionata è una bomba
+    function isBomb() {
+        if (arrBombs.includes(parseInt(this.textContent))){
+            this.classList.add('box-bomb');
+        } else {
+            this.classList.add('box-clicked');
+        }
+    }
     
 }
 
@@ -114,28 +98,3 @@ function functionDifficulty() {
         return 49;
     }
 }
-
-// Funzione per cambiare colore alle caselle selezionate
-function changeColorBox() {
-    this.classList.add('box-clicked');
-}
-
-// Funzione che legge il contenuto della casella
-function readContentBox() {
-    return parseInt(this.textContent);
-}
-
-// // GENERATORE DI 16 NUMERI CASUALI
-// function bombsGenerator(){
-//     // Creo un array, inizialmente vuoto per i numeri random da non cliccare
-//     const arrBombs = []
-
-//     // Riempio l'array con 16 numeri senza ripetizioni
-//     while (arrBombs.length < 16) {
-//         let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
-//         if (!arrBombs.includes(randomBox)) {
-//             arrBombs.push(randomBox);
-//         }
-//     }
-//     return arrBombs;
-// }
