@@ -103,6 +103,11 @@ header {
     color: white;
 }
 
+#grid .box-bomb {
+    background-color: red;
+    color: white;
+}
+
 
 
 /* FOOTER */

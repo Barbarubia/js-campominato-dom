@@ -40,39 +40,53 @@ function playGame() {
         arrBoxes.push(parseInt(numBox));
 
 
-        // GENERATORE DI 16 NUMERI CASUALI
-        function bombsGenerator(){
-            // Creo un array, inizialmente vuoto per i numeri random da non cliccare
-            const arrBombs = []
+        
 
-            // Riempio l'array con 16 numeri senza ripetizioni
-            while (arrBombs.length < 16) {
-                let randomBox = Math.floor(Math.random() * functionDifficulty() + 1);
-                if (!arrBombs.includes(randomBox)) {
-                    arrBombs.push(randomBox);
-                }
-            }
-            return arrBombs;
-        }
+
+        // GIOCO
+
+
 
         // Seleziono una casella facendole cambiare colore
-        let selectedBox = box.addEventListener('click', selectBox);
+        box.addEventListener('click', changeColorBox);
+
+        // Leggo il numero della casella cliccata
+        let selectedBox = box.addEventListener('click', readContentBox);
 
         // Creo un array delle caselle selezionate, inizialmente vuoto
         let arraySelectedBoxes = [];
 
         // // Aggiungo all'array il valore delle caselle selezionate
-        // COME PESCO QUEL VALORE????
-        // arraySelectedBoxes.push()
-
-
-
+        arraySelectedBoxes.push(selectedBox);
+        
+        
+        
     }
 
+    // GENERATORE DI 16 NUMERI CASUALI
+        // Creo un array, inizialmente vuoto per i numeri random da non cliccare
+        const arrBombs = []
 
+        // Riempio l'array con 16 numeri senza ripetizioni
+        while (arrBombs.length < 16) {
+            let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
+            if (!arrBombs.includes(randomBox)) {
+                arrBombs.push(randomBox);
+            }
+        }
+    
+    console.log(arrBombs);
+    console.log(arrBombs.includes(10));
+   if (arrBombs.includes(10)) {
+    console.log('HAI PERSO');
+    } else {
+        console.log('hai vinto');
+    }
+    
     
 
-console.log(bombsGenerator());
+    
+    
     
 }
 
@@ -101,26 +115,27 @@ function functionDifficulty() {
     }
 }
 
-// Funzione per cambiare colore alle celle selezionate
-function selectBox() {
+// Funzione per cambiare colore alle caselle selezionate
+function changeColorBox() {
     this.classList.add('box-clicked');
-    console.log(this);
-    // vorrei pescare solo il numero contenuto dentro a this
 }
 
-// GENERATORE DI 16 NUMERI CASUALI
-function bombsGenerator(){
-    // Creo un array, inizialmente vuoto per i numeri random da non cliccare
-    const arrBombs = []
-
-    // Riempio l'array con 16 numeri senza ripetizioni
-    while (arrBombs.length < 16) {
-        let randomBox = Math.floor(Math.random() * functionDifficulty() + 1);
-        if (!arrBombs.includes(randomBox)) {
-            arrBombs.push(randomBox);
-        }
-    }
-    return arrBombs;
+// Funzione che legge il contenuto della casella
+function readContentBox() {
+    return parseInt(this.textContent);
 }
-        
-        
+
+// // GENERATORE DI 16 NUMERI CASUALI
+// function bombsGenerator(){
+//     // Creo un array, inizialmente vuoto per i numeri random da non cliccare
+//     const arrBombs = []
+
+//     // Riempio l'array con 16 numeri senza ripetizioni
+//     while (arrBombs.length < 16) {
+//         let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
+//         if (!arrBombs.includes(randomBox)) {
+//             arrBombs.push(randomBox);
+//         }
+//     }
+//     return arrBombs;
+// }
