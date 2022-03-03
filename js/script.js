@@ -71,15 +71,27 @@ function playGame() {
 
     // Stampo l'array delle bombe in console per testare il funzionamento
     console.log(arrBombs);
+    
+    // Seleziono tutte le caselle della griglia
+    let gridBoxes = [...document.querySelectorAll('button.box')];
+    console.log(gridBoxes)
 
     // Funzione per verificare se la casella selezionata è una bomba
     function isBomb() {
+        
 
         if (arrBombs.includes(parseInt(this.textContent))){
             // if true, applico la classe box-bomb (sfondo rosso) alla casella
             this.classList.add('box-bomb');
             // esce il messaggio di errore
             outputMessage.innerHTML = `Hai perso :-( Il tuo punteggio di sopravvivenza è ${selectedBoxes.length}. Prova ancora!`;
+            for (let i = 0; i < gridBoxes.length; i++) {
+                // Elimino la visualizzazione del puntatore del mouse all'interno della griglia
+                gridBoxes[i].classList.add('box-no-pointer');
+                // Rimuovo l'evento che permette di cliccare sulle caselle
+                gridBoxes[i].removeEventListener('click', isBomb);
+            }
+
         } else { // altrimenti
             // applico la classe box-safe (sfondo azzurro) alla casella
             this.classList.add('box-safe');

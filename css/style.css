@@ -102,6 +102,10 @@ main {
     color: white;
 }
 
+#grid .box-no-pointer {
+    cursor: none;
+}
+
 main #result {
     margin-top: 2rem;
     font-weight: 600;
