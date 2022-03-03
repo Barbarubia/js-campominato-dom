@@ -6,11 +6,11 @@ const areaGrid = document.getElementById('grid');
 
 // Cosa succede se clicco sul bottone play?
 // Eseguo una funzione che genera la griglia di gioco
-buttonPlay.addEventListener('click', generateGrid);
+buttonPlay.addEventListener('click', playGame);
 
 
 // Scrivo la funzione che mi genera una griglia di N elementi, dove N dipende dalla difficoltà selezionata
-function generateGrid() {
+function playGame() {
     // Se clicco 2 volte consecutive non voglio che mi generi 2 griglie, quindi ad ogni click prima ripulisco l'area
     areaGrid.innerHTML = '';
 
@@ -26,23 +26,8 @@ function generateGrid() {
         // Scrivo il numero della casella all'interno del box
         box.innerHTML = numBox;
 
-        // TODO CLICK SU CASELLA
-        box.addEventListener('click', changeColorBox);
-
         // Appendo i div creati all'interno dell'HTML
         areaGrid.append(box);
-
-        /*
-        Sezione di codice non più necessaria
-        // Quanti box su ogni riga (voglio che la griglia sia un quadrato)
-        if (functionDifficulty() == 100) {
-            box.classList.add('box-10');
-        } else if (functionDifficulty() == 81) {
-            box.classList.add('box-9');
-        } else if (functionDifficulty() == 49) {
-            box.classList.add('box-7');
-        }
-        */
 
         // Calcolo del N. box per riga e grandezza dei box effettuato direttamente in JS senza bisogno di aggiungere ulteriori classi
         // N. box per riga
@@ -51,26 +36,48 @@ function generateGrid() {
         box.style.width = `calc(100% / ${boxesPerRow})`;
         box.style.height = `calc(100% / ${boxesPerRow})`;
 
+        // Riempio l'array con i valori numerici di tutte le caselle
         arrBoxes.push(parseInt(numBox));
-        
-    
-    }
-    console.log(arrBoxes);
 
-// GENERATORE DI 5 NUMERI CASUALI: """""QUESTA PARTE ANCORA NON SERVE"""""
-    // Creo un array, inizialmente vuoto per i numeri random da non cliccare
-    const arrBombs = []
 
-    // Riempio l'array con 5 numeri senza ripetizioni
-    while (arrBombs.length < 5) {
-        let randomBox = Math.floor(Math.random() * functionDifficulty() + 1);
-        if (!arrBombs.includes(randomBox)) {
-            arrBombs.push(randomBox);
+        // GENERATORE DI 16 NUMERI CASUALI
+        function bombsGenerator(){
+            // Creo un array, inizialmente vuoto per i numeri random da non cliccare
+            const arrBombs = []
+
+            // Riempio l'array con 16 numeri senza ripetizioni
+            while (arrBombs.length < 16) {
+                let randomBox = Math.floor(Math.random() * functionDifficulty() + 1);
+                if (!arrBombs.includes(randomBox)) {
+                    arrBombs.push(randomBox);
+                }
+            }
+            return arrBombs;
         }
-    }
-    console.log(arrBombs);
 
+        // Seleziono una casella facendole cambiare colore
+        let selectedBox = box.addEventListener('click', selectBox);
+
+        // Creo un array delle caselle selezionate, inizialmente vuoto
+        let arraySelectedBoxes = [];
+
+        // // Aggiungo all'array il valore delle caselle selezionate
+        // COME PESCO QUEL VALORE????
+        // arraySelectedBoxes.push()
+
+
+
+    }
+
+
+    
+
+console.log(bombsGenerator());
+    
 }
+
+    
+    
 
 
 /*
@@ -94,7 +101,26 @@ function functionDifficulty() {
     }
 }
 
-
-function changeColorBox() {
+// Funzione per cambiare colore alle celle selezionate
+function selectBox() {
     this.classList.add('box-clicked');
+    console.log(this);
+    // vorrei pescare solo il numero contenuto dentro a this
 }
+
+// GENERATORE DI 16 NUMERI CASUALI
+function bombsGenerator(){
+    // Creo un array, inizialmente vuoto per i numeri random da non cliccare
+    const arrBombs = []
+
+    // Riempio l'array con 16 numeri senza ripetizioni
+    while (arrBombs.length < 16) {
+        let randomBox = Math.floor(Math.random() * functionDifficulty() + 1);
+        if (!arrBombs.includes(randomBox)) {
+            arrBombs.push(randomBox);
+        }
+    }
+    return arrBombs;
+}
+        
+        
