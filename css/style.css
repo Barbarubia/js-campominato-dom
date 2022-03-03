@@ -102,6 +102,11 @@ main {
     color: white;
 }
 
+#grid .box-win {
+    background-color: green;
+    color: white;
+}
+
 #grid .box-no-pointer {
     cursor: none;
 }

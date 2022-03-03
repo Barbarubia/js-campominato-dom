@@ -10,6 +10,9 @@ const outputMessage = document.getElementById('result');
 // Creo un array vuoto delle caselle cliccate
 let selectedBoxes = [];
 
+// Numero di bombe nel gioco
+let nBombs = 16;
+
 // Cosa succede se clicco sul bottone play?
 // Eseguo una funzione che genera la griglia di gioco
 buttonPlay.addEventListener('click', playGame);
@@ -57,24 +60,31 @@ function playGame() {
         let selectedBox = box.addEventListener('click', isBomb);
     }
 
-    // GENERATORE DI 16 NUMERI CASUALI (BOMBE)
+    // GENERATORE DI "nBombs" NUMERI CASUALI (BOMBE)
     // Creo un array, inizialmente vuoto per i numeri random da non cliccare
     const arrBombs = []
 
-    // Riempio l'array con 16 numeri senza ripetizioni
-    while (arrBombs.length < 16) {
+    // Riempio l'array con nBombs numeri senza ripetizioni
+    while (arrBombs.length < nBombs) {
     let randomBox = parseInt(Math.floor(Math.random() * functionDifficulty() + 1));
     if (!arrBombs.includes(randomBox)) {
         arrBombs.push(randomBox);
         }
     }     
 
-    // Stampo l'array delle bombe in console per testare il funzionamento
+    // Test: stampo l'array delle bombe in console per testare il funzionamento
     console.log(arrBombs);
     
     // Seleziono tutte le caselle della griglia
     let gridBoxes = [...document.querySelectorAll('button.box')];
-    console.log(gridBoxes)
+    // Creo un array vuoto
+    let arrGridBoxesContent = []
+    // E lo riempio con i valori contenuti nelle singole caselle
+    for (let numGridBox = 0; numGridBox < gridBoxes.length; numGridBox++) {
+        arrGridBoxesContent.push(parseInt(gridBoxes[numGridBox].textContent));
+    }
+    // test
+    // console.log(arrGridBoxesContent);
 
     // Funzione per verificare se la casella selezionata è una bomba
     function isBomb() {
@@ -90,6 +100,31 @@ function playGame() {
                 gridBoxes[i].classList.add('box-no-pointer');
                 // Rimuovo l'evento che permette di cliccare sulle caselle
                 gridBoxes[i].removeEventListener('click', isBomb);
+            }
+
+            // Applico la visualizzazione di tutte le bombe
+            for (let numGridBox = 0; numGridBox < gridBoxes.length; numGridBox++) {
+                if (arrBombs.includes(arrGridBoxesContent[numGridBox])) {
+                    gridBoxes[numGridBox].classList.add('box-bomb');
+                } else { // e coloro anche la visualizzazione delle caselle safe
+                    gridBoxes[numGridBox].classList.add('box-safe');
+                }
+            }
+
+        } else if (selectedBoxes.length == gridBoxes.length - arrBombs.length - 1) {
+            // esce il messaggio di vittoria
+            outputMessage.innerHTML = `Hai completato la griglia! Il tuo punteggio di sopravvivenza è ${selectedBoxes.length}.`;
+            
+            for (let i = 0; i < gridBoxes.length; i++) {
+                // Elimino la visualizzazione del puntatore del mouse all'interno della griglia
+                gridBoxes[i].classList.add('box-no-pointer');
+                // Rimuovo l'evento che permette di cliccare sulle caselle
+                gridBoxes[i].removeEventListener('click', isBomb);
+            }
+
+            // Applico uno sfondo verde a tutte le caselle
+            for (let numGridBox = 0; numGridBox < gridBoxes.length; numGridBox++) {
+                gridBoxes[numGridBox].classList.add('box-win');
             }
 
         } else { // altrimenti
