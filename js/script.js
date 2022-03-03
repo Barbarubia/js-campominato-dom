@@ -4,6 +4,12 @@ const buttonPlay = document.getElementById('play');
 // Seleziono l'elemento HTML all'interno del quale genererò la griglia
 const areaGrid = document.getElementById('grid');
 
+// Seleziono l'elemento HTML dove stampo il risultato
+const outputMessage = document.getElementById('result');
+
+// Creo un array vuoto delle caselle cliccate
+let selectedBoxes = [];
+
 // Cosa succede se clicco sul bottone play?
 // Eseguo una funzione che genera la griglia di gioco
 buttonPlay.addEventListener('click', playGame);
@@ -13,6 +19,12 @@ buttonPlay.addEventListener('click', playGame);
 function playGame() {
     // Se clicco 2 volte consecutive non voglio che mi generi 2 griglie, quindi ad ogni click prima ripulisco l'area
     areaGrid.innerHTML = '';
+    
+    // Ripulisco il messaggio con il risultato
+    outputMessage.innerHTML = '';
+
+    // Ripulisco l'array delle caselle cliccate nei precedenti giochi
+    selectedBoxes = [];
 
     // Creo un array vuoto che conterrà il valore di tutte le caselle
     let arrBoxes = [];
@@ -41,11 +53,8 @@ function playGame() {
         // Riempio l'array con i valori numerici di tutte le caselle
         arrBoxes.push(parseInt(numBox));
 
-        // Seleziono una casella facendole cambiare colore
-        // box.addEventListener('click', changeColorBox);
-
-        // Leggo il numero della casella cliccata
-        selectedBox = box.addEventListener('click', isBomb);
+        // Leggo il numero della casella cliccata e verifico se è una bomba
+        let selectedBox = box.addEventListener('click', isBomb);
     }
 
     // GENERATORE DI 16 NUMERI CASUALI (BOMBE)
@@ -65,13 +74,21 @@ function playGame() {
 
     // Funzione per verificare se la casella selezionata è una bomba
     function isBomb() {
+
         if (arrBombs.includes(parseInt(this.textContent))){
+            // if true, applico la classe box-bomb (sfondo rosso) alla casella
             this.classList.add('box-bomb');
-        } else {
-            this.classList.add('box-clicked');
+            // esce il messaggio di errore
+            outputMessage.innerHTML = `Hai perso :-( Il tuo punteggio di sopravvivenza è ${selectedBoxes.length}. Prova ancora!`;
+        } else { // altrimenti
+            // applico la classe box-safe (sfondo azzurro) alla casella
+            this.classList.add('box-safe');
+            // aggiungo la casella selezionata all'array delle caselle selezionate controllando che il giocatore non abbia cliccato 2 volte sulla stessa casella
+            if (!selectedBoxes.includes(parseInt(this.textContent))) {
+            selectedBoxes.push(parseInt(this.textContent));
+            }
         }
     }
-    
 }
 
     

@@ -21,8 +21,9 @@ body {
 
 /* HEADER */
 header {
+    height: 5rem;
     background-color: white;
-    padding: 1rem 5rem;
+    padding: 0 5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -58,12 +59,22 @@ header {
 
 
 /* MAIN */
+main {
+    height: calc(100vh - 8rem);
+    padding-top: 2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+}
+
 #grid {
     width: 500px;
     height: 500px;
-    margin: 0 auto;
+    margin-top: 0;
     display: flex;
     flex-wrap: wrap;
+    flex-grow: 0;
 }
 
 #grid .box {
@@ -76,29 +87,12 @@ header {
     cursor: pointer;
 }
 
-/* Classi non più necessarie: calcolato in JS
-.box-10 {
-    width: calc(100% / 10);
-    height: calc(100% / 10);
-}
-
-.box-9 {
-    width: calc(100% / 9);
-    height: calc(100% / 9);
-}
-
-.box-7 {
-    width: calc(100% / 7);
-    height: calc(100% / 7);
-}
- */
-
-#grid .box:hover {
+/* #grid .box:hover {
     background-color: #6495ed;
     color: white;
-}
+} */
 
-#grid .box-clicked {
+#grid .box-safe {
     background-color: #6495ed;
     color: white;
 }
@@ -108,11 +102,19 @@ header {
     color: white;
 }
 
+main #result {
+    margin-top: 2rem;
+    font-weight: 600;
+}
+
 
 
 /* FOOTER */
 footer {
     width: 100%;
-    padding: 1rem 5rem;
+    height: 3rem;
+    padding: 0 5rem;
     background-color: white;
+    display: flex;
+    align-items: center;
 }
