@@ -73,7 +73,7 @@ function playGame() {
     }     
 
     // Test: stampo l'array delle bombe in console per testare il funzionamento
-    console.log(arrBombs);
+    // console.log(arrBombs);
     
     // Seleziono tutte le caselle della griglia
     let gridBoxes = [...document.querySelectorAll('button.box')];
